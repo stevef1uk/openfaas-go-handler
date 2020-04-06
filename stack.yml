@@ -3,10 +3,6 @@ provider:
   name: openfaas
   gateway: https://system.sjfisher.com
 functions:
-  test2:
-    lang: node10-express
-    handler: ./test2
-    image: test2:latest
   go1:
     lang: golang-http
     handler: ./go1
