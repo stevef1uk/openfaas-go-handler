@@ -1,7 +1,7 @@
 version: 1.0
 provider:
   name: openfaas
-  gateway: system.sjfisher.com
+  gateway: https://system.sjfisher.com
 functions:
   test2:
     lang: node10-express
