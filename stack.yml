@@ -1,0 +1,10 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  test2:
+    lang: node10-express
+    handler: ./test2
+    image: test2:latest
+
