@@ -7,4 +7,8 @@ functions:
     lang: node10-express
     handler: ./test2
     image: test2:latest
+  go1:
+    lang: golang-http
+    handler: ./go1
+    image: go1:latest
 
