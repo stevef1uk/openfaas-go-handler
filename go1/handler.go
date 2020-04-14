@@ -10,7 +10,6 @@ import (
 // Handle a function invocation
 func Handle(req handler.Request) (handler.Response, error) {
 	var err error
-
 	message := fmt.Sprintf("Hello world, from Steve & Sarah  the input was: %s", string(req.Body))
 
 	return handler.Response{
