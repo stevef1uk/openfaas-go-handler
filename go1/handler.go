@@ -3,6 +3,7 @@ package function
 import (
 	//"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	handler "github.com/openfaas-incubator/go-function-sdk"
@@ -14,10 +15,11 @@ func Handle(req handler.Request) (handler.Response, error) {
 	var body []byte
 	ret_msg := "Hello world, from Steve & Sarah"
 	//message := fmt.Sprintf("Hello world, from Steve & Sarah  the input was: %s", string(req.Body))
-
+	log.Print("In handler")
 	if ( req.Host == "" ) {
-		req.Host = "http://gateway.openfaas:8080/function/env"
+		req.Host = "https://gateway.openfaas:8080/function/env"
 	}
+	log.Print("Attempting to call URL " + req.Host)
 	resp, err := http.Get(req.Host)
 	if err != nil {
 		// handle error
