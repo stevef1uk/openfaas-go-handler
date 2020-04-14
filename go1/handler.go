@@ -17,7 +17,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 	//message := fmt.Sprintf("Hello world, from Steve & Sarah  the input was: %s", string(req.Body))
 	log.Print("In handler")
 	if req.Host == "" {
-		req.Host = "https://gateway.openfaas:8080/function/env"
+		req.Host = "http://gateway.openfaas:8080/function/env"
 	}
 	log.Print("Attempting to call URL " + req.Host)
 	resp, err := http.Get(req.Host)
