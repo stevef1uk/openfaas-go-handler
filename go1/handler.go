@@ -41,6 +41,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 	}
 	log.Println(req.Host)
 	log.Println(req.QueryString)
+	log.Println("Method = %s", req.Method)
 	log.Print("Attempting to call URL " + req.Host)
 	resp, err := http.Get(req.Host)
 	if err != nil {
