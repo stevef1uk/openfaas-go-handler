@@ -39,9 +39,9 @@ func Handle(req handler.Request) (handler.Response, error) {
 		//req.Host = "http://test4.openfaas:5000/v1/verysimple?id=1"
 		req.Host = "http://test4.openfaas:5000/v1/verysimple?" + req.QueryString
 	}
-	log.Println(req.Host)
-	log.Println(req.QueryString)
-	log.Println("Method = %s", req.Method)
+	log.Println("Host = " + req.Host)
+	log.Println("Query String = " + req.QueryString)
+	log.Println("Method = " +  req.Method)
 	log.Print("Attempting to call URL " + req.Host)
 	resp, err := http.Get(req.Host)
 	if err != nil {
