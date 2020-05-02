@@ -12,27 +12,9 @@ import (
 // Handle a function invocation
 func Handle(req handler.Request) (handler.Response, error) {
 	var err error
-	ret_msg := "Hello world, from Steve & Sarah"
-	//message := fmt.Sprintf("Hello world, from Steve & Sarah  the input was: %s", string(req.Body))
+	ret_msg := ""
 	log.Printf("In handler, req = %v\n", req)
-	/*)
-	if  len(req.QueryString) == 0 {
-		log.Println("Empty Query String")
-		return handler.Response{
-			Body:       []byte(body),
-			StatusCode: http.StatusBadRequest,
-		}, err
-	}
-
-	id := req.QueryString[
-	if req.Host == "" {
-		req.Host = "http://gateway.openfaas:8080/function/env"
-		//req.Host = "http://test4.default?id=1"
-	}
-	params := url.Values{}
-	params.Add("id", string(id))
-	req.Host = req.Host + params.Encode()
-	*/
+	//req.Host = "http://gateway.openfaas:8080/function/env"
 	req.Host = "http://test4.openfaas:5000/v1/verysimple"
 	switch req.Method {
 	case "GET":
@@ -63,6 +45,9 @@ func handleGET(req handler.Request) (string, error) {
 	} else {
 		body, err = ioutil.ReadAll(resp.Body)
 		ret = string(body)
+		if ret == "" {
+			ret = "No Data Found"
+		}
 		defer resp.Body.Close()
 	}
 	return ret, err
@@ -70,19 +55,13 @@ func handleGET(req handler.Request) (string, error) {
 
 func handlePOST(req handler.Request) (string, error) {
 	ret := ""
-	var body []byte
 
 	log.Println("In HandlePOST, Host = " + req.Host)
 	log.Println("Body = " + string(req.Body))
 
 	resp, err := http.Post(req.Host, "application/json", bytes.NewBuffer(req.Body))
 	if err != nil {
-		// handle error
-		ret = "OOPs call failed " + err.Error()
-	} else {
-		body, err = ioutil.ReadAll(resp.Body)
-		ret = string(body)
-		defer resp.Body.Close()
+		ret = "OOPs call failed " + err.Error() + " Response " + string(resp.StatusCode)
 	}
 	return ret, err
 }
