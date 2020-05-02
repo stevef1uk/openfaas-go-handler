@@ -73,10 +73,9 @@ func handlePOST(req handler.Request) (string, error) {
 	var body []byte
 
 	log.Println("In HandlePOST, Host = " + req.Host)
-	log.Println("Query String = " + req.QueryString)
-	body = []byte(req.QueryString)
+	log.Println("Body = " + string(req.Body))
 
-	resp, err := http.Post(req.Host, "application/json", bytes.NewBuffer(body))
+	resp, err := http.Post(req.Host, "application/json", bytes.NewBuffer(req.Body))
 	if err != nil {
 		// handle error
 		ret = "OOPs call failed " + err.Error()
