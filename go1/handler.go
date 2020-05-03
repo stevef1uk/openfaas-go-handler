@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 )
 
 // Handle a function invocation
@@ -16,7 +15,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 	log.Printf("In handler, req = %v\n", req)
 	// Lets check the API Key has been Paassed
 	log.Printf(" Header structure %v\n", req.Header)
-	key := os.Getenv("X-Api-Key") // converted via the Header: X-Api-Key
+	key := req.Header.Get("X-Api-Key")
 	if key == "" {
 		for k, v := range req.Header {
 			log.Printf("Header field %q, Value %q\n", k, v)
