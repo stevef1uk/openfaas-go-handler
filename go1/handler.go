@@ -25,6 +25,10 @@ func Handle(req handler.Request) (handler.Response, error) {
 			ret_msg, err = handlePOST(req)
 		default:
 			ret_msg = "Error: unrecognised method: " + req.Method
+			status = http.StatusMethodNotAllowed
+		}
+		if err != nil {
+			status = http.StatusServiceUnavailable
 		}
 	} else {
 		log.Println("API Request not validated")
