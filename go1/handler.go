@@ -18,6 +18,9 @@ func Handle(req handler.Request) (handler.Response, error) {
 	log.Printf(" Header structure %v\n", req.Header)
 	key := os.Getenv("X-Api-Key") // converted via the Header: X-Api-Key
 	if key == "" {
+		for k, v := range req.Header {
+			log.Printf("Header field %q, Value %q\n", k, v)
+		}
 		log.Printf("Trying to get Header value X-Api-Key")
 		key = req.Header.Get("X-Api-Key ")
 	}
