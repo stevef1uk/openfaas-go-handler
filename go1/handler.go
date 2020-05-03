@@ -16,6 +16,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 	// Lets check the API Key has been Paassed
 	log.Printf(" Header structure %v\n", req.Header)
 	key := req.Header.Get("X-Api-Key")
+	/*
 	if key == "" {
 		for k, v := range req.Header {
 			log.Printf("Header field %q, Value %q\n", k, v)
@@ -24,7 +25,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 				break
 			}
 		}
-	}
+	}*/
 	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
