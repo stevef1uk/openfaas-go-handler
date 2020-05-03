@@ -19,6 +19,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
+		log.Printf("comparing = %v to %v\n", []byte(key), real_secret )
 		if bytes.Equal([]byte(key), real_secret) {
 			//req.Host = "http://gateway.openfaas:8080/function/env"
 			req.Host = "http://test4.openfaas:5000/v1/verysimple"
