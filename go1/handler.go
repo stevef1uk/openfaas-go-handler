@@ -15,29 +15,21 @@ func Handle(req handler.Request) (handler.Response, error) {
 	status := http.StatusOK
 
 	log.Printf("In handler, req = %v\n", req)
-	// Lets check the API Key has been Paassed
-	log.Printf(" Header structure %v\n", req.Header)
-	key := req.Header.Get("X-Api-Key")
-	//log.Printf("API Key passed = %s\n", key)
-	real_secret, err := getAPISecret("secret-api-key")
-	if err == nil {
-		log.Printf("comparing = %v to %v\n", []byte(key), real_secret)
-		if bytes.Equal([]byte(key), real_secret) {
-			//req.Host = "http://gateway.openfaas:8080/function/env"
-			req.Host = "http://test4.openfaas:5000/v1/verysimple"
-			switch req.Method {
-			case "GET":
-				ret_msg, err = handleGET(req)
-			case "POST":
-				ret_msg, err = handlePOST(req)
-			default:
-				ret_msg = "Error: unrecognised method: " + req.Method
-			}
-		} else {
-			log.Println("API Request not validated")
-			ret_msg = "API Key not present or valid "
-			status = http.StatusForbidden
+	if checkSecretOk("secret-api-key", req) {
+		//req.Host = "http://gateway.openfaas:8080/function/env"
+		req.Host = "http://test4.openfaas:5000/v1/verysimple"
+		switch req.Method {
+		case "GET":
+			ret_msg, err = handleGET(req)
+		case "POST":
+			ret_msg, err = handlePOST(req)
+		default:
+			ret_msg = "Error: unrecognised method: " + req.Method
 		}
+	} else {
+		log.Println("API Request not validated")
+		ret_msg = "API Key not present or valid "
+		status = http.StatusForbidden
 	}
 
 	return handler.Response{
@@ -95,6 +87,17 @@ func getAPISecret(secretName string) (secretBytes []byte, err error) {
 
 func checkSecretOk(secretName string, req handler.Request) bool {
 	ret := true
+
+	log.Printf(" In checkSecretOk Header structure %v\n", req.Header)
+	key := req.Header.Get("X-Api-Key")
+	//log.Printf("API Key passed = %s\n", key)
+	real_secret, err := getAPISecret("secret-api-key")
+	if err == nil {
+		log.Printf("comparing = %v to %v\n", []byte(key), real_secret)
+		if !bytes.Equal([]byte(key), real_secret) {
+			ret = false
+		}
+	}
 
 	return ret
 }
