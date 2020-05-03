@@ -22,7 +22,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 			log.Printf("Header field %q, Value %q\n", k, v)
 		}
 		log.Printf("Trying to get Header value X-Api-Key")
-		key = req.Header.Get("X-Api-Key ")
+		key = req.Header.Get("X-Api-Key ")    
 	}
 	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
