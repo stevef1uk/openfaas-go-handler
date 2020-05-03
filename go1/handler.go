@@ -3,10 +3,10 @@ package function
 import (
 	"bytes"
 	handler "github.com/openfaas-incubator/go-function-sdk"
-	//"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 // Handle a function invocation
@@ -14,15 +14,26 @@ func Handle(req handler.Request) (handler.Response, error) {
 	var err error
 	ret_msg := ""
 	log.Printf("In handler, req = %v\n", req)
-	//req.Host = "http://gateway.openfaas:8080/function/env"
-	req.Host = "http://test4.openfaas:5000/v1/verysimple"
-	switch req.Method {
-	case "GET":
-		ret_msg, err = handleGET(req)
-	case "POST":
-		ret_msg, err = handlePOST(req)
-	default:
-		ret_msg = "Error: unrecognised method: " + req.Method
+	// Lets check the API Key has been Paassed
+	key := os.Getenv("Http_X_Api_Key")
+	log.Printf("API Key passed = %s\n", key)
+	real_secret, err := getAPISecret("stevef1uk-secret-api-key")
+	if err == nil {
+		if bytes.Equal([]byte(key), real_secret) {
+			//req.Host = "http://gateway.openfaas:8080/function/env"
+			req.Host = "http://test4.openfaas:5000/v1/verysimple"
+			switch req.Method {
+			case "GET":
+				ret_msg, err = handleGET(req)
+			case "POST":
+				ret_msg, err = handlePOST(req)
+			default:
+				ret_msg = "Error: unrecognised method: " + req.Method
+			}
+		} else {
+			log.Println("API Request not validated")
+			ret_msg = "API Key not present or valid "
+		}
 	}
 
 	return handler.Response{
@@ -64,4 +75,22 @@ func handlePOST(req handler.Request) (string, error) {
 		ret = "OOPs call failed " + err.Error() + " Response " + string(resp.StatusCode)
 	}
 	return ret, err
+}
+
+func getAPISecret(secretName string) (secretBytes []byte, err error) {
+	// read from the openfaas secrets folder
+	secretBytes, err = ioutil.ReadFile("/var/openfaas/secrets/" + secretName)
+	if err != nil {
+		// read from the original location for backwards compatibility with openfaas <= 0.8.2
+		secretBytes, err = ioutil.ReadFile("/run/secrets/" + secretName)
+		log.Println("Read Secret ok")
+	}
+
+	return secretBytes, err
+}
+
+func checkSecretOk(secretName string, req handler.Request) bool {
+	ret := true
+
+	return ret
 }
