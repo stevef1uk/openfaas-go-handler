@@ -7,4 +7,6 @@ functions:
     lang: golang-http
     handler: ./go1
     image: go1:latest
-
+    image: functions/api-key-protected:latest
+    secrets:
+      - secret-api-key
