@@ -15,20 +15,16 @@ func Handle(req handler.Request) (handler.Response, error) {
 	ret_msg := ""
 	log.Printf("In handler, req = %v\n", req)
 	// Lets check the API Key has been Paassed
+	log.Printf(" Header structure %v\n", req.Header)
 	key := os.Getenv("X_Api_Key") // converted via the Header: X-Api-Key
-	/* if key == "" {
-		log.Printf(" Header structure %v\n", req.Header)
-		log.Printf("Trying to get Header value Http_X_Api_Key")
-		key = req.Header.Get("Http_X_Api_Key ")
+	if key == "" {
+		log.Printf("Trying to get Header value X_Api_Key")
+		key = req.Header.Get("X_Api_Key ")
 		if key == "" {
-			log.Printf("Trying to get Header value X_Api_Key")
-			key = req.Header.Get("X_Api_Key ")
-			if key == "" {
-				log.Printf("Trying to get Header value X-Api-Key")
-				key = req.Header.Get("X-Api-Key ")
-			}
+			log.Printf("Trying to get Header value Http_X_Api_Key")
+			key = req.Header.Get("Http_X_Api_Key ")
 		}
-	} */
+	}
 	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
