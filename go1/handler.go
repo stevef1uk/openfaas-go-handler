@@ -20,9 +20,11 @@ func Handle(req handler.Request) (handler.Response, error) {
 	if key == "" {
 		for k, v := range req.Header {
 			log.Printf("Header field %q, Value %q\n", k, v)
+			if k == "X-Api-Key" {
+				key = v[0]
+				break
+			}
 		}
-		log.Printf("Trying to get Header value X-Api-Key")
-		key = req.Header.Get("X-Api-Key ")
 	}
 	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
