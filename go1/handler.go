@@ -17,7 +17,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 	// Lets check the API Key has been Paassed
 	key := os.Getenv("Http_X_Api_Key")
 	log.Printf("API Key passed = %s\n", key)
-	real_secret, err := getAPISecret("stevef1uk-secret-api-key")
+	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
 		if bytes.Equal([]byte(key), real_secret) {
 			//req.Host = "http://gateway.openfaas:8080/function/env"
