@@ -15,7 +15,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 	ret_msg := ""
 	log.Printf("In handler, req = %v\n", req)
 	// Lets check the API Key has been Paassed
-	key := os.Getenv("Http_X_Api_Key")
+	key := os.Getenv("Http_X_Api_Key") // converted via the Header: X-Api-Key
 	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
