@@ -17,15 +17,15 @@ func Handle(req handler.Request) (handler.Response, error) {
 	log.Printf(" Header structure %v\n", req.Header)
 	key := req.Header.Get("X-Api-Key")
 	/*
-	if key == "" {
-		for k, v := range req.Header {
-			log.Printf("Header field %q, Value %q\n", k, v)
-			if k == "X-Api-Key" {
-				key = v[0]
-				break
+		if key == "" {
+			for k, v := range req.Header {
+				log.Printf("Header field %q, Value %q\n", k, v)
+				if k == "X-Api-Key" {
+					key = v[0]
+					break
+				}
 			}
-		}
-	}*/
+		}*/
 	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
