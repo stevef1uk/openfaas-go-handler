@@ -10,7 +10,7 @@ Recently added a secret & associated API Key to validate that the request is tru
 The functional can be invoked for READ via the OpenFaaS GUI at https://system.sjfisher.com/dashboard/stevef1uk however, it won't work as the API Key needs to be passed. Thus using curl is required follows:
 <pre><code>
  curl  -H "X-Api-Key: I'mSteveLetMeIn" -v  https://stevef1uk.sjfisher.com/go1?id=1
-  curl -d '{"id": 3, "message": "Sarah"}' -H "Content-Type: application/json" -H "X-Api-Key: I'mSteveLetMeIn" -v -X POST https://stevef1uk.sjfisher.com/go
+  curl -d '{"id": 3, "message": "Sarah"}' -H "Content-Type: application/json" -H "X-Api-Key: I'mSteveLetMeIn" -v -X POST https://stevef1uk.sjfisher.com/go1
 </pre></code>
 Alternatively the OpenFaaS Gateway GUI can be used: https://gw.sjfisher.com/ui/
 To deploy the Gateway I followed the ofc_bootstrap approach to deploy OpenFaaS Private Cloud and then applied the following yaml:
