@@ -12,21 +12,13 @@ import (
 func Handle(req handler.Request) (handler.Response, error) {
 	var err error
 	ret_msg := ""
+	status := http.StatusOK
+
 	log.Printf("In handler, req = %v\n", req)
 	// Lets check the API Key has been Paassed
 	log.Printf(" Header structure %v\n", req.Header)
 	key := req.Header.Get("X-Api-Key")
-	/*
-		if key == "" {
-			for k, v := range req.Header {
-				log.Printf("Header field %q, Value %q\n", k, v)
-				if k == "X-Api-Key" {
-					key = v[0]
-					break
-				}
-			}
-		}*/
-	log.Printf("API Key passed = %s\n", key)
+	//log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
 		log.Printf("comparing = %v to %v\n", []byte(key), real_secret)
@@ -44,12 +36,13 @@ func Handle(req handler.Request) (handler.Response, error) {
 		} else {
 			log.Println("API Request not validated")
 			ret_msg = "API Key not present or valid "
+			status = http.StatusForbidden
 		}
 	}
 
 	return handler.Response{
 		Body:       []byte(ret_msg),
-		StatusCode: http.StatusOK,
+		StatusCode: status,
 	}, err
 }
 
