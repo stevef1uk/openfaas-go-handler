@@ -97,7 +97,7 @@ func checkSecretOk(secretName string, req handler.Request) bool {
 	//log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
-		log.Printf("comparing = %v to %v\n", []byte(key), real_secret)
+		//log.Printf("comparing = %v to %v\n", []byte(key), real_secret)
 		if !bytes.Equal([]byte(key), real_secret) {
 			ret = false
 		}
