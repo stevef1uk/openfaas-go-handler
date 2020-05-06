@@ -11,7 +11,7 @@ The functional can be invoked for READ via the OpenFaaS GUI at https://system.sj
  curl  -H "X-Api-Key: I'mSteveLetMeIn" -v  https://stevef1uk.sjfisher.com/go1?id=1
   curl -d '{"id": 3, "message": "Sarah"}' -H "Content-Type: application/json" -H "X-Api-Key: I'mSteveLetMeIn" -v -X POST https://stevef1uk.sjfisher.com/go1
 </pre></code>
-Of course as OpenFaaS support asynchronous function execution *using NATS) it is possible to use an alternative URL to achive this: 
+Of course as OpenFaaS support asynchronous function execution (using NATS) it is possible to use an alternative URL to achive this: 
 <pre><code>
 curl -d '{"id": 10, "message": "Async Test"}' -H "Content-Type: application/json" -H "X-Api-Key: I'mSteveLetMeIn" -v -X POST https://gw.sjfisher.com/async-function/stevef1uk-go1
 </pre></code>
