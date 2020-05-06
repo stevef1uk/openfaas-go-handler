@@ -10,3 +10,6 @@ functions:
     image: functions/api-key-protected:latest
     secrets:
       - secret-api-key
+    labels:
+      com.openfaas.scale.min: "0"
+      com.openfaas.scale.max: "10" 
