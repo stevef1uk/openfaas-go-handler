@@ -17,7 +17,9 @@ func Handle(req handler.Request) (handler.Response, error) {
 	log.Printf("In handler, req = %v\n", req)
 	if checkSecretOk("secret-api-key", req) {
 		//req.Host = "http://gateway.openfaas:8080/function/env"
-		req.Host = "http://test4.openfaas:5000/v1/verysimple"
+		if req.Host == "" {
+			req.Host = "http://test4.openfaas:5000/v1/verysimple"
+		}
 		switch req.Method {
 		case "GET":
 			ret_msg, err = handleGET(req)
@@ -74,6 +76,7 @@ func handlePOST(req handler.Request) (string, error) {
 	if err != nil {
 		ret = "OOPs call failed " + err.Error() + " Response " + string(resp.StatusCode)
 	}
+	defer resp.Body.Close()
 	return ret, err
 }
 
@@ -101,6 +104,8 @@ func checkSecretOk(secretName string, req handler.Request) bool {
 		if !bytes.Equal([]byte(key), real_secret) {
 			ret = false
 		}
+	} else {
+		ret = false
 	}
 
 	return ret
