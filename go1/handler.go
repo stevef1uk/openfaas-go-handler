@@ -97,7 +97,7 @@ func checkSecretOk(secretName string, req handler.Request) bool {
 
 	log.Printf(" In checkSecretOk Header structure %v\n", req.Header)
 	key := req.Header.Get("X-Api-Key")
-	//log.Printf("API Key passed = %s\n", key)
+	log.Printf("API Key passed = %s\n", key)
 	real_secret, err := getAPISecret("secret-api-key")
 	if err == nil {
 		//log.Printf("comparing = %v to %v\n", []byte(key), real_secret)
