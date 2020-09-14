@@ -1,4 +1,4 @@
-# test2
+# OpenFaas Go Handler
 OpenFaas test
 Contains a simple Go handler which can be deployed as an OpenFaaS function. 
 The function handles GET & POST methiods and in this case route the request to test4, which is an automatically
