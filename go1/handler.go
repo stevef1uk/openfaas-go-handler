@@ -59,7 +59,7 @@ func handleGET(req handler.Request) (string, error) {
 		body, err = ioutil.ReadAll(resp.Body)
 		ret = string(body)
 		if ret == "" {
-			ret = "No Data Found"
+			ret = "No Data Found "
 		}
 		defer resp.Body.Close()
 	}
