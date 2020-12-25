@@ -34,7 +34,7 @@ func Handle(req handler.Request) (handler.Response, error) {
 		}
 	} else {
 		log.Println("API Request not validated")
-		ret_msg = "API Key not present or valid "
+		ret_msg = "API Key not present or valid"
 		status = http.StatusForbidden
 	}
 
